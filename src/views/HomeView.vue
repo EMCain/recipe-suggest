@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="wrapper">
+    <div class="content">
+      <h1>Helpful Recipe Comments 🧑‍🍳</h1>
+      <p>Generate a comment on your favorite recipe</p>
+      <recipe-search :items="items" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import RecipeSearch from "../components/RecipeSearch.vue";
 
 export default {
-  name: "HomeView",
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      searchOpen: false,
+      items: [
+        "American sub",
+        "Bacon",
+        "Bacon, egg and cheese",
+        "Bagel toast",
+        "Baked bean",
+        "Bologna salad sandwich",
+        "Bánh mì",
+        "Barbecue",
+      ],
+    };
   },
+  components: { RecipeSearch },
 };
 </script>
