@@ -11,6 +11,7 @@
     <ul v-show="isOpen" class="autocomplete-results">
       <li v-if="isLoading" class="loading">Finding recipes...</li>
       <li
+        :option_id="result.id"
         v-else
         v-for="(result, i) in results"
         :key="i"
@@ -18,27 +19,30 @@
         class="autocomplete-result"
         :class="{ 'is-active': i === arrowCounter }"
       >
-        {{ result }}
+        {{ result.title }}
       </li>
     </ul>
   </div>
 
-  <p>Chosen recipe: {{ chosen }}</p>
+  <p>
+    Chosen recipe: {{ chosenTitle }}
+    <span v-show="chosenID">( ID: {{ chosenID }})</span>
+  </p>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
   props: {
-    items: {
-      type: Array,
-      required: false,
-      default: () => [],
-    },
     isAsync: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
+  },
+  computed: {
+    ...mapState(["recipeOptions"]),
   },
   data() {
     return {
@@ -46,7 +50,8 @@ export default {
       results: [],
       isOpen: false,
       isLoading: false,
-      chosen: "",
+      chosenTitle: "",
+      chosenID: 0,
       arrowCounter: -1,
     };
   },
@@ -57,7 +62,7 @@ export default {
     document.removeEventListener("click", this.handleClickOutside);
   },
   watch: {
-    items: function (value) {
+    recipeOptions: function (value) {
       if (this.isAsync) {
         this.results = value;
         this.isOpen = true;
@@ -66,15 +71,24 @@ export default {
     },
   },
   methods: {
-    setResult(result) {
-      this.search = result;
-      this.chosen = result;
-      this.isOpen = false;
+    ...mapMutations(["SET_OPTIONS"]),
+    searchForRecipes(searchTerm) {
+      const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
+      const searchRequest = new Request(searchUrl);
+      fetch(searchRequest)
+        .then((response) => response.json())
+        .then((data) => {
+          this.SET_OPTIONS(data);
+
+          // set using vuex
+          // use "map" to get first 10 items and their names and IDs
+        });
     },
-    filterResults() {
-      this.results = this.items.filter(
-        (item) => item.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-      );
+    setResult(result) {
+      this.search = result.title;
+      this.chosenTitle = result.title;
+      this.chosenID = result.id;
+      this.isOpen = false;
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
@@ -94,18 +108,18 @@ export default {
     },
     onEnter() {
       this.search = this.results[this.arrowCounter];
-      this.chosen = this.search;
+      this.chosenTitle = this.search;
       this.arrowCounter = -1;
       this.isOpen = false;
     },
     onChange() {
-      this.filterResults();
       this.isOpen = true;
       this.$emit("input", this.search);
       if (this.isAsync) {
         this.isLoading = true;
-      } else {
-        this.filterResults();
+        this.searchForRecipes(this.search);
+        // use vuex to set the displayed list (see filterResults for reference) to the first 10 results
+        // will need to use an ID to identify what recipe is chosen.
         this.isOpen = true;
       }
     },
