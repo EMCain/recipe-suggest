@@ -24,8 +24,6 @@
       </li>
     </ul>
   </div>
-
-  <p>Chosen recipe: {{ chosenRecipe.title }}</p>
 </template>
 
 <script>

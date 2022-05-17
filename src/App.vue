@@ -23,6 +23,7 @@ $dark-blue: darken($light-blue, 50%);
   text-align: center;
   color: $dark-green;
   background-color: $beige;
+  padding-bottom: 40px;
 }
 a {
   color: $dark-blue;

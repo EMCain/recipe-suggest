@@ -2,7 +2,10 @@
   <div class="wrapper">
     <div class="content">
       <h1>Helpful Recipe Comments 🧑‍🍳</h1>
-      <p>Generate a comment on your favorite recipe</p>
+      <p>
+        Missing an ingredient from your favorite recipe? Don't let that stop you
+        from commenting!
+      </p>
 
       <comment-card v-if="comment" :comment="comment" :stars="stars" />
       <div v-else>
@@ -35,7 +38,6 @@ export default {
     },
     comment() {
       if (this.chosenIngredient) {
-        //return `I replaced ${this.chosenIngredient} with (random). Gross!`;
         const replacementTemplate =
           TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
         const newIngredient =
