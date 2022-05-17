@@ -49,6 +49,7 @@ export default {
       isOpen: false,
       isLoading: false,
       arrowCounter: -1,
+      chosenID: 0,
     };
   },
   mounted() {
@@ -83,16 +84,15 @@ export default {
     },
     setResult(result) {
       this.search = result.title;
-      this.chosenRecipe.title = result.title;
-      this.chosenRecipe.id = result.id;
+      this.chosenID = result.id;
       this.arrowCounter = -1;
       this.isOpen = false;
-      this.CHOOSE_RECIPE(this.chosenRecipe.id);
+      this.CHOOSE_RECIPE(this.chosenID);
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
         this.arrowCounter = -1;
-        this.isOpen.false;
+        this.isOpen = false;
       }
     },
     onArrowDown() {

@@ -9,16 +9,19 @@ export default createStore({
       fullRecipeResults: {},
       chosenRecipe: {},
       ingredientOptions: [],
+      chosenIngredient: "",
     };
   },
   getters: {},
   mutations: {
-    RESET() {
-      return {
+    RESET(state) {
+      // eslint-disable-next-line no-unused-vars
+      state = {
         recipeOptions: [],
         fullRecipeResults: {},
         chosenRecipe: {},
         ingredientOptions: [],
+        chosenIngredient: "",
       };
     },
     SET_OPTIONS(state, responseData) {
@@ -41,8 +44,6 @@ export default createStore({
           };
           return obj;
         }, {});
-      } else {
-        self.RESET();
       }
     },
     CHOOSE_RECIPE(state, recipeID) {
