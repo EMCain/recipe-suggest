@@ -24,10 +24,13 @@
     </ul>
   </div>
 
-  <p>
-    Chosen recipe: {{ chosenTitle }}
-    <span v-show="chosenID">( ID: {{ chosenID }})</span>
-  </p>
+  <p>Chosen recipe: {{ chosenTitle }}</p>
+  <h2 v-show="chosenID">What ingredient are you out of?</h2>
+  <ul v-show="chosenRecipeIngredients">
+    <li v-for="(ingredient, i) in chosenRecipeIngredients" :key="i">
+      {{ ingredient }}
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -42,7 +45,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["recipeOptions"]),
+    ...mapState(["recipeOptions", "chosenRecipeIngredients"]),
   },
   data() {
     return {
@@ -71,24 +74,29 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_OPTIONS"]),
+    ...mapMutations(["SET_OPTIONS", "CHOOSE_RECIPE"]),
     searchForRecipes(searchTerm) {
-      const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
-      const searchRequest = new Request(searchUrl);
-      fetch(searchRequest)
-        .then((response) => response.json())
-        .then((data) => {
-          this.SET_OPTIONS(data);
-
-          // set using vuex
-          // use "map" to get first 10 items and their names and IDs
-        });
+      console.log(searchTerm);
+      if (searchTerm) {
+        const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
+        const searchRequest = new Request(searchUrl);
+        fetch(searchRequest)
+          .then((response) => response.json())
+          .then((data) => {
+            this.SET_OPTIONS(data);
+          });
+      } else {
+        // TODO this doesn't work. Clear options on empty string.
+        this.SET_OPTIONS({ meals: null });
+      }
     },
     setResult(result) {
       this.search = result.title;
       this.chosenTitle = result.title;
       this.chosenID = result.id;
+      this.arrowCounter = -1;
       this.isOpen = false;
+      this.CHOOSE_RECIPE(this.chosenID);
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
@@ -107,10 +115,7 @@ export default {
       }
     },
     onEnter() {
-      this.search = this.results[this.arrowCounter];
-      this.chosenTitle = this.search;
-      this.arrowCounter = -1;
-      this.isOpen = false;
+      this.setResult(this.results[this.arrowCounter]);
     },
     onChange() {
       this.isOpen = true;

@@ -7,7 +7,7 @@ export default createStore({
     return {
       recipeOptions: [],
       fullRecipeResults: {},
-      chosenRecipe: {},
+      chosenRecipeIngredients: {},
       ingredientOptions: [],
     };
   },
@@ -19,8 +19,23 @@ export default createStore({
         state.recipeOptions = meals.map((meal) => {
           return { id: meal.idMeal, title: meal.strMeal };
         });
-        // TODO set fullRecipeResults with the ingredients parsed in order
+        state.fullRecipeResults = meals.reduce((obj, meal) => {
+          const ingredientKeys = Object.keys(meal).filter((key) =>
+            key.startsWith("strIngredient")
+          );
+          const ingredients = ingredientKeys
+            .map((key) => meal[key])
+            .filter((key) => key);
+          obj[meal.idMeal] = ingredients;
+          return obj;
+        }, {});
+      } else {
+        state.recipeOptions = [];
+        state.fullRecipeResults = {};
       }
+    },
+    CHOOSE_RECIPE(state, recipeID) {
+      state.chosenRecipeIngredients = state.fullRecipeResults[recipeID];
     },
   },
   actions: {},
