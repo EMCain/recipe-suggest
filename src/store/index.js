@@ -7,12 +7,20 @@ export default createStore({
     return {
       recipeOptions: [],
       fullRecipeResults: {},
-      chosenRecipeIngredients: {},
+      chosenRecipe: {},
       ingredientOptions: [],
     };
   },
   getters: {},
   mutations: {
+    RESET() {
+      return {
+        recipeOptions: [],
+        fullRecipeResults: {},
+        chosenRecipe: {},
+        ingredientOptions: [],
+      };
+    },
     SET_OPTIONS(state, responseData) {
       if (responseData.meals !== null) {
         const meals = responseData.meals.slice(0, 10);
@@ -26,16 +34,19 @@ export default createStore({
           const ingredients = ingredientKeys
             .map((key) => meal[key])
             .filter((key) => key);
-          obj[meal.idMeal] = ingredients;
+          obj[meal.idMeal] = {
+            id: meal.idMeal,
+            title: meal.strMeal,
+            ingredients,
+          };
           return obj;
         }, {});
       } else {
-        state.recipeOptions = [];
-        state.fullRecipeResults = {};
+        self.RESET();
       }
     },
     CHOOSE_RECIPE(state, recipeID) {
-      state.chosenRecipeIngredients = state.fullRecipeResults[recipeID];
+      state.chosenRecipe = state.fullRecipeResults[recipeID];
     },
   },
   actions: {},

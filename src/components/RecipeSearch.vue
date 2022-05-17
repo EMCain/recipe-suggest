@@ -25,13 +25,7 @@
     </ul>
   </div>
 
-  <p>Chosen recipe: {{ chosenTitle }}</p>
-  <h2 v-show="chosenID">What ingredient are you out of?</h2>
-  <ul v-show="chosenRecipeIngredients">
-    <li v-for="(ingredient, i) in chosenRecipeIngredients" :key="i">
-      {{ ingredient }}
-    </li>
-  </ul>
+  <p>Chosen recipe: {{ chosenRecipe.title }}</p>
 </template>
 
 <script>
@@ -46,7 +40,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["recipeOptions", "chosenRecipeIngredients"]),
+    ...mapState(["recipeOptions", "chosenRecipe"]),
   },
   data() {
     return {
@@ -54,8 +48,6 @@ export default {
       results: [],
       isOpen: false,
       isLoading: false,
-      chosenTitle: "",
-      chosenID: 0,
       arrowCounter: -1,
     };
   },
@@ -75,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_OPTIONS", "CHOOSE_RECIPE"]),
+    ...mapMutations(["RESET", "SET_OPTIONS", "CHOOSE_RECIPE"]),
     searchForRecipes(searchTerm) {
       if (searchTerm) {
         const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
@@ -86,17 +78,16 @@ export default {
             this.SET_OPTIONS(data);
           });
       } else {
-        // TODO this doesn't work. Clear options on empty string.
-        this.SET_OPTIONS({ meals: null });
+        this.RESET();
       }
     },
     setResult(result) {
       this.search = result.title;
-      this.chosenTitle = result.title;
-      this.chosenID = result.id;
+      this.chosenRecipe.title = result.title;
+      this.chosenRecipe.id = result.id;
       this.arrowCounter = -1;
       this.isOpen = false;
-      this.CHOOSE_RECIPE(this.chosenID);
+      this.CHOOSE_RECIPE(this.chosenRecipe.id);
     },
     handleClickOutside(event) {
       if (!this.$el.contains(event.target)) {
