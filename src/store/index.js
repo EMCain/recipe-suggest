@@ -49,6 +49,10 @@ export default createStore({
     CHOOSE_RECIPE(state, recipeID) {
       state.chosenRecipe = state.fullRecipeResults[recipeID];
     },
+    CHOOSE_INGREDIENT(state, ingredientName) {
+      state.chosenIngredient = ingredientName;
+      console.log(ingredientName);
+    },
   },
   actions: {},
   modules: {},
