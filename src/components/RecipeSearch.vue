@@ -7,6 +7,7 @@
       @keydown.up="onArrowUp"
       @keydown.enter="onEnter"
       type="text"
+      placeholder="Search for a recipe"
     />
     <ul v-show="isOpen" class="autocomplete-results">
       <li v-if="isLoading" class="loading">Finding recipes...</li>
@@ -76,7 +77,6 @@ export default {
   methods: {
     ...mapMutations(["SET_OPTIONS", "CHOOSE_RECIPE"]),
     searchForRecipes(searchTerm) {
-      console.log(searchTerm);
       if (searchTerm) {
         const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
         const searchRequest = new Request(searchUrl);
