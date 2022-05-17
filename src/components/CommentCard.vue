@@ -1,6 +1,6 @@
 <template>
   <div class="comment-card">
-    <h3>{{ chosenRecipe.title }}</h3>
+    <h3>Comment on {{ chosenRecipe.title }}</h3>
     <div>{{ starsEmoji }}</div>
     <h2>{{ comment }}</h2>
   </div>
