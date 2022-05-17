@@ -12,7 +12,8 @@ To publish updates to the site (see [gist](https://gist.github.com/tduarte/eac06
 # IMPORTANT: first commit latest code changes and push to the main branch
 npm run build
 # while this is running, remove "dist" from .gitignore 
-git checkout main # you can avoid this line if you are in main...
+git add .
+git commit -m "insert deployment commit message"
 git subtree split --prefix dist -b gh-pages # create a local gh-pages branch containing the splitted output folder
 git push -f origin gh-pages:gh-pages # force the push of the gh-pages branch to the remote gh-pages branch at origin
 git branch -D gh-pages # delete the local gh-pages because you will need it: ref
