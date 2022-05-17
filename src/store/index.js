@@ -37,11 +37,14 @@ export default createStore({
           const ingredients = ingredientKeys
             .map((key) => meal[key])
             .filter((key) => key);
-          obj[meal.idMeal] = {
-            id: meal.idMeal,
-            title: meal.strMeal,
-            ingredients,
-          };
+          // Don't add recipes with no ingredients
+          if (ingredients.length > 0) {
+            obj[meal.idMeal] = {
+              id: meal.idMeal,
+              title: meal.strMeal,
+              ingredients,
+            };
+          }
           return obj;
         }, {});
       }
