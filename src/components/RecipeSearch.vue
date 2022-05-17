@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   props: {
@@ -68,7 +68,8 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["RESET", "SET_OPTIONS", "CHOOSE_RECIPE"]),
+    ...mapActions(["resetState"]),
+    ...mapMutations(["SET_OPTIONS", "CHOOSE_RECIPE"]),
     searchForRecipes(searchTerm) {
       if (searchTerm) {
         const searchUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`;
@@ -79,7 +80,7 @@ export default {
             this.SET_OPTIONS(data);
           });
       } else {
-        this.RESET();
+        this.resetState();
       }
     },
     setResult(result) {

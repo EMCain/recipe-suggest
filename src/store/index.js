@@ -1,6 +1,15 @@
 import { createStore } from "vuex";
 
 // Please follow these naming conventions https://github.com/vuestorefront/vue-storefront/issues/2069
+const getDefaultState = () => {
+  return {
+    recipeOptions: [],
+    fullRecipeResults: {},
+    chosenRecipe: {},
+    ingredientOptions: [],
+    chosenIngredient: "",
+  };
+};
 
 export default createStore({
   state() {
@@ -15,14 +24,7 @@ export default createStore({
   getters: {},
   mutations: {
     RESET(state) {
-      // eslint-disable-next-line no-unused-vars
-      state = {
-        recipeOptions: [],
-        fullRecipeResults: {},
-        chosenRecipe: {},
-        ingredientOptions: [],
-        chosenIngredient: "",
-      };
+      Object.assign(state, getDefaultState());
     },
     SET_OPTIONS(state, responseData) {
       if (responseData.meals !== null) {
@@ -54,9 +56,12 @@ export default createStore({
     },
     CHOOSE_INGREDIENT(state, ingredientName) {
       state.chosenIngredient = ingredientName;
-      console.log(ingredientName);
     },
   },
-  actions: {},
+  actions: {
+    resetState({ commit }) {
+      commit("RESET");
+    },
+  },
   modules: {},
 });

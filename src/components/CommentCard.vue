@@ -3,11 +3,12 @@
     <h3>Comment on {{ chosenRecipe.title }}</h3>
     <div>{{ starsEmoji }}</div>
     <h2>{{ comment }}</h2>
+    <a href="#" @click="resetState">Comment on Another Recipe</a>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   props: {
     stars: {
@@ -24,6 +25,9 @@ export default {
     starsEmoji() {
       return "\u2605".repeat(this.stars) + "\u2606".repeat(5 - this.stars);
     },
+  },
+  methods: {
+    ...mapActions(["resetState"]),
   },
 };
 </script>
