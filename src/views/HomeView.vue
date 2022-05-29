@@ -7,7 +7,7 @@
         from commenting!
       </p>
 
-      <comment-card v-if="comment" :comment="comment" :stars="stars" />
+      <current-comment-card v-if="comment" :comment="comment" :stars="stars" />
       <div v-else>
         <recipe-search />
         <choose-ingredient v-if="Object.keys(chosenRecipe).length" />
@@ -19,7 +19,7 @@
 <script>
 import { mapState } from "vuex";
 
-import CommentCard from "../components/CommentCard.vue";
+import CurrentCommentCard from "../components/CurrentCommentCard.vue";
 import ChooseIngredient from "../components/ChooseIngredient.vue";
 import RecipeSearch from "../components/RecipeSearch.vue";
 
@@ -65,6 +65,6 @@ export default {
       }
     },
   },
-  components: { CommentCard, RecipeSearch, ChooseIngredient },
+  components: { CurrentCommentCard, RecipeSearch, ChooseIngredient },
 };
 </script>

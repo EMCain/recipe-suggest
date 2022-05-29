@@ -19,12 +19,22 @@ export default createStore({
       chosenRecipe: {},
       ingredientOptions: [],
       chosenIngredient: "",
+      currentComment: "",
+      currentRating: 0,
+      pastComments: [],
     };
   },
   getters: {},
   mutations: {
     RESET(state) {
       Object.assign(state, getDefaultState());
+    },
+    ARCHIVE_COMMENT(state) {
+      state.pastComments.push({
+        title: state.chosenRecipe.title,
+        rating: state.currentRating,
+        comment: state.currentComment,
+      });
     },
     SET_OPTIONS(state, responseData) {
       if (responseData.meals !== null) {

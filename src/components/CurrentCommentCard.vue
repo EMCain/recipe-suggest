@@ -1,7 +1,7 @@
 <template>
-  <div class="comment-card">
+  <div class="current-comment-card">
     <h3>Comment on {{ chosenRecipe.title }}</h3>
-    <div>{{ starsEmoji }}</div>
+    <star-rating :rating="stars" />
     <h2>{{ comment }}</h2>
     <a href="#" @click="resetState">Comment on Another Recipe</a>
   </div>
@@ -9,6 +9,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+
+import StarRating from "./StarRating.vue";
+
 export default {
   props: {
     stars: {
@@ -29,6 +32,7 @@ export default {
   methods: {
     ...mapActions(["resetState"]),
   },
+  components: { StarRating },
 };
 </script>
 
@@ -42,7 +46,7 @@ $dark-rose: darken($rose, 40%);
 $light-blue: #d1e8e4;
 $dark-blue: darken($light-blue, 50%);
 
-.comment-card {
+.current-comment-card {
   background-color: $light-blue;
   color: $dark-rose;
 }
