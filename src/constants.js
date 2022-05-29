@@ -1,6 +1,6 @@
 const TEMPLATES = [
   "I replaced the {OLD_ING} with {NEW_ING}.",
-  "Instead of {NEW_ING}, I used {OLD_ING}.",
+  "Instead of {OLD_ING}, I used {NEW_ING}.",
   "Substituted {NEW_ING} for {OLD_ING}.",
   "Used {NEW_ING} instead of {OLD_ING}.",
 ];
