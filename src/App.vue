@@ -4,6 +4,20 @@
     <router-link to="/about">About</router-link>
   </nav>
   <router-view />
+  <footer>
+    <p>
+      Note: to the relief of recipe writers everywhere, comments aren't actually
+      being posted on any websites. I take no responsibility for any crimes
+      against gastronomy that result from the use of this software.
+    </p>
+    <p>
+      <a href="https://github.com/EMCain/recipe-suggest" target="_blank">
+        Source code
+      </a>
+      |
+      <a href="https://emcain.github.io" target="_blank">My portfolio site</a>
+    </p>
+  </footer>
 </template>
 
 <style lang="scss">
@@ -16,7 +30,7 @@ $dark-rose: darken($rose, 40%);
 $light-blue: #d1e8e4;
 $dark-blue: darken($light-blue, 50%);
 
-#app {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,6 +45,8 @@ a {
 
 nav {
   padding: 30px;
+  background-color: $light-blue;
+  border: solid $dark-blue;
 
   a {
     font-weight: 500;
@@ -41,6 +57,15 @@ nav {
       font-weight: 900;
       text-decoration: none;
     }
+  }
+}
+
+footer {
+  padding-top: 2em;
+  font-style: italic;
+  font-size: 0.8em;
+  a {
+    font-style: normal;
   }
 }
 </style>
