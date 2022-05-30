@@ -99,6 +99,9 @@ export default createStore({
     CHOOSE_INGREDIENT(state, ingredientName) {
       state.chosenIngredient = ingredientName;
     },
+    REMOVE_COMMENT(state, index) {
+      state.pastComments.splice(index, 1);
+    },
   },
   actions: {
     chooseIngredient(store, ingredient) {

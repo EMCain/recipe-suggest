@@ -21,6 +21,7 @@
           :title="comment.title"
           :rating="comment.rating"
           :comment="comment.comment"
+          :index="index"
           :key="index"
         />
       </div>
