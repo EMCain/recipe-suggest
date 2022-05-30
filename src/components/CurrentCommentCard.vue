@@ -3,12 +3,13 @@
     <h3>Comment on {{ chosenRecipe.title }}</h3>
     <star-rating :rating="currentRating" />
     <h2>{{ currentComment }}</h2>
-    <a href="#" @click="commentOnAnother">Comment on Another Recipe</a>
+    <a href="#" @click="commentOnAnother"> <send-icon /> Post Comment </a>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { SendIcon } from "@vue-icons/feather";
 
 import StarRating from "./StarRating.vue";
 
@@ -22,7 +23,7 @@ export default {
       this.archiveAndReset();
     },
   },
-  components: { StarRating },
+  components: { StarRating, SendIcon },
 };
 </script>
 
@@ -39,5 +40,9 @@ $dark-blue: darken($light-blue, 50%);
 .current-comment-card {
   background-color: $light-blue;
   color: $dark-rose;
+}
+
+.feather-send {
+  vertical-align: middle;
 }
 </style>

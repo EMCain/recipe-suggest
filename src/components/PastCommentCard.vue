@@ -1,6 +1,6 @@
 <template>
   <div class="past-comment">
-    <p @click="REMOVE_COMMENT(index)" class="delete-button">X</p>
+    <p @click="REMOVE_COMMENT(index)" class="delete-button"><trash-2-icon /></p>
     <h2>{{ title }}</h2>
     <star-rating :rating="rating" />
     <p>{{ comment }}</p>
@@ -8,8 +8,10 @@
 </template>
 
 <script>
-import StarRating from "./StarRating.vue";
 import { mapMutations } from "vuex";
+import { Trash2Icon } from "@vue-icons/feather";
+
+import StarRating from "./StarRating.vue";
 
 export default {
   props: {
@@ -33,7 +35,7 @@ export default {
   methods: {
     ...mapMutations(["REMOVE_COMMENT"]),
   },
-  components: { StarRating },
+  components: { StarRating, Trash2Icon },
 };
 </script>
 
