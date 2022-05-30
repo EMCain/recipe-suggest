@@ -64,7 +64,7 @@ footer {
   padding-top: 2em;
   font-style: italic;
   font-size: 0.8em;
-  a {
+  p:last-child {
     font-style: normal;
   }
 }

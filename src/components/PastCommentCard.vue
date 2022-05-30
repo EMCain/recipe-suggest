@@ -1,6 +1,14 @@
 <template>
   <div class="past-comment">
-    <p @click="REMOVE_COMMENT(index)" class="delete-button"><trash-2-icon /></p>
+    <p class="button-container">
+      <span
+        @click="REMOVE_COMMENT(index)"
+        class="delete-button"
+        title="Delete Comment"
+      >
+        <trash-2-icon />
+      </span>
+    </p>
     <h2>{{ title }}</h2>
     <star-rating :rating="rating" />
     <p>{{ comment }}</p>
@@ -57,8 +65,11 @@ $dark-blue: darken($light-blue, 50%);
     padding: 0;
     margin: 0.5em;
   }
-  .delete-button {
+  .button-container {
     text-align: right;
+    .delete-button {
+      cursor: pointer;
+    }
   }
 }
 </style>

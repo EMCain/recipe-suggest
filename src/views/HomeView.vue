@@ -26,7 +26,8 @@
         />
       </div>
       <div v-else class="past-comments">
-        You haven't left any comments yet. Search for a recipe to start!
+        You haven't left any comments yet. Type the name of a recipe in the
+        search bar to start!
       </div>
     </div>
   </div>
