@@ -56,12 +56,12 @@ export default createStore({
     },
     ARCHIVE_COMMENT_AND_RESET(state) {
       const pastComments = [
-        ...state.pastComments,
         {
           title: state.chosenRecipe.title,
           rating: state.currentRating,
           comment: state.currentComment,
         },
+        ...state.pastComments,
       ];
       var newState = getDefaultState();
       newState.pastComments = pastComments;
