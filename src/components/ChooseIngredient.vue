@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   props: {
@@ -28,9 +28,9 @@ export default {
     ...mapState(["chosenRecipe"]),
   },
   methods: {
-    ...mapMutations(["CHOOSE_INGREDIENT"]),
+    ...mapActions(["chooseIngredient"]),
     selectIngredient(ingredient) {
-      this.CHOOSE_INGREDIENT(ingredient);
+      this.chooseIngredient(ingredient);
     },
   },
 };

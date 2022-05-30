@@ -1,9 +1,9 @@
 <template>
   <div class="current-comment-card">
     <h3>Comment on {{ chosenRecipe.title }}</h3>
-    <star-rating :rating="stars" />
-    <h2>{{ comment }}</h2>
-    <a href="#" @click="resetState">Comment on Another Recipe</a>
+    <star-rating :rating="currentRating" />
+    <h2>{{ currentComment }}</h2>
+    <a href="#" @click="commentOnAnother">Comment on Another Recipe</a>
   </div>
 </template>
 
@@ -13,24 +13,14 @@ import { mapState, mapActions } from "vuex";
 import StarRating from "./StarRating.vue";
 
 export default {
-  props: {
-    stars: {
-      type: Number,
-      required: true,
-    },
-    comment: {
-      type: String,
-      required: true,
-    },
-  },
   computed: {
-    ...mapState(["chosenRecipe"]),
-    starsEmoji() {
-      return "\u2605".repeat(this.stars) + "\u2606".repeat(5 - this.stars);
-    },
+    ...mapState(["chosenRecipe", "currentComment", "currentRating"]),
   },
   methods: {
-    ...mapActions(["resetState"]),
+    ...mapActions(["resetState", "archiveAndReset"]),
+    commentOnAnother() {
+      this.archiveAndReset();
+    },
   },
   components: { StarRating },
 };
