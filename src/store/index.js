@@ -13,6 +13,7 @@ const getDefaultState = () => {
     currentComment: "",
     currentRating: 0,
     pastComments: [],
+    currentlyEditing: -1,
   };
 };
 
@@ -65,7 +66,6 @@ export default createStore({
       ];
       var newState = getDefaultState();
       newState.pastComments = pastComments;
-      console.log(newState);
       Object.assign(state, newState);
     },
     SET_OPTIONS(state, responseData) {
@@ -99,8 +99,18 @@ export default createStore({
     CHOOSE_INGREDIENT(state, ingredientName) {
       state.chosenIngredient = ingredientName;
     },
+    EDIT_COMMENT(state, index) {
+      state.currentlyEditing = index;
+    },
+    UPDATE_COMMENT(state, newComment) {
+      state.pastComments[state.currentlyEditing].comment = newComment;
+    },
+    STOP_EDITING_COMMENT(state) {
+      state.currentlyEditing = -1;
+    },
     REMOVE_COMMENT(state, index) {
       state.pastComments.splice(index, 1);
+      state.currentlyEditing = -1;
     },
   },
   actions: {

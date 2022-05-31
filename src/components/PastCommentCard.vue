@@ -2,6 +2,22 @@
   <div class="past-comment">
     <p class="button-container">
       <span
+        v-if="currentlyEditing == index"
+        @click="STOP_EDITING_COMMENT()"
+        class="save-button"
+        title="Save Comment"
+      >
+        <save-icon />
+      </span>
+      <span
+        v-else
+        @click="EDIT_COMMENT(index)"
+        class="edit-button"
+        title="Edit Comment"
+      >
+        <edit-icon />
+      </span>
+      <span
         @click="REMOVE_COMMENT(index)"
         class="delete-button"
         title="Delete Comment"
@@ -11,13 +27,17 @@
     </p>
     <h2>{{ title }}</h2>
     <star-rating :rating="rating" />
-    <p>{{ comment }}</p>
+    <textarea
+      v-if="currentlyEditing == index"
+      v-model="editedComment"
+    ></textarea>
+    <p v-else>{{ comment }}</p>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import { Trash2Icon } from "@vue-icons/feather";
+import { mapState, mapMutations } from "vuex";
+import { EditIcon, SaveIcon, Trash2Icon } from "@vue-icons/feather";
 
 import StarRating from "./StarRating.vue";
 
@@ -40,10 +60,26 @@ export default {
       required: true,
     },
   },
-  methods: {
-    ...mapMutations(["REMOVE_COMMENT"]),
+  computed: {
+    ...mapState(["currentlyEditing", "pastComments"]),
+    editedComment: {
+      get() {
+        return this.pastComments[this.index].comment;
+      },
+      set(value) {
+        this.UPDATE_COMMENT(value);
+      },
+    },
   },
-  components: { StarRating, Trash2Icon },
+  methods: {
+    ...mapMutations([
+      "EDIT_COMMENT",
+      "REMOVE_COMMENT",
+      "UPDATE_COMMENT",
+      "STOP_EDITING_COMMENT",
+    ]),
+  },
+  components: { StarRating, Trash2Icon, EditIcon, SaveIcon },
 };
 </script>
 
